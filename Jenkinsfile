@@ -13,9 +13,7 @@ pipeline {
                     inventory: '/root/ansible-uyuni/inventory.ini',
                     installation: 'Ansible',
                     credentialsId: 'ansible-ssh',
-                    extraVars: [
-                        [key: 'uyuni_password', value: '${UYUNI_PASSWORD}', hidden: true]
-                    ]
+                    extraVars: 'uyuni_password=${UYUNI_PASSWORD}'
                 )
             }
         }
