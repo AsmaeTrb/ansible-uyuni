@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        UYUNI_PASSWORD = credentials('uyuni-password')
+    }
+
     stages {
         stage('Bootstrap Uyuni') {
             steps {
@@ -8,7 +12,10 @@ pipeline {
                     playbook: '/root/ansible-uyuni/playbooks/bootstrap.yml',
                     inventory: '/root/ansible-uyuni/inventory.ini',
                     installation: 'Ansible',
-                    credentialsId: env.ANSIBLE_CREDENTIALS_ID
+                    credentialsId: 'ansible-ssh',
+                    extraVars: [
+                        [key: 'uyuni_password', value: '${UYUNI_PASSWORD}', hidden: true]
+                    ]
                 )
             }
         }
