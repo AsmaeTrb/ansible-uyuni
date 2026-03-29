@@ -7,7 +7,8 @@ pipeline {
                 ansiblePlaybook(
                     playbook: '/root/ansible-uyuni/playbooks/bootstrap.yml',
                     inventory: '/root/ansible-uyuni/inventory.ini',
-                    installation: 'Ansible'
+                    installation: 'Ansible',
+                    credentialsId: env.ANSIBLE_CREDENTIALS_ID
                 )
             }
         }
