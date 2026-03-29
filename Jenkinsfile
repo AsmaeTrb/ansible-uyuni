@@ -8,13 +8,14 @@ pipeline {
     stages {
         stage('Bootstrap Uyuni') {
             steps {
-                ansiblePlaybook(
-                    playbook: '/root/ansible-uyuni/playbooks/bootstrap.yml',
-                    inventory: '/root/ansible-uyuni/inventory.ini',
-                    installation: 'Ansible',
-                    credentialsId: 'ansible-ssh',
-                    extraVars: 'uyuni_password=${UYUNI_PASSWORD}'
-                )
+                withEnv(["ANSIBLE_EXTRA_VARS=uyuni_password=${UYUNI_PASSWORD}"]) {
+                    sh '''
+                    ansible-playbook \
+                        -i /root/ansible-uyuni/inventory.ini \
+                        /root/ansible-uyuni/playbooks/bootstrap.yml \
+                        -e "uyuni_password=${UYUNI_PASSWORD}"
+                    '''
+                }
             }
         }
     }
