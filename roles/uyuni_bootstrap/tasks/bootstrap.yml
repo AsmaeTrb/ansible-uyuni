@@ -1,0 +1,28 @@
+- name: "Télécharger le script bootstrap"
+  get_url:
+    url: "http://{{ uyuni_server }}/pub/bootstrap/bootstrap.sh"
+    dest: /tmp/bootstrap.sh
+    mode: "0755"
+    validate_certs: false
+    force: true
+    timeout: 30
+
+- name: "Injecter la clé d'activation"
+  replace:
+    path: /tmp/bootstrap.sh
+    regexp: '^ACTIVATION_KEYS=.*$'
+    replace: 'ACTIVATION_KEYS="{{ activation_key }}"'
+
+- name: "Exécuter le bootstrap (2 à 5 minutes)"
+  shell: bash /tmp/bootstrap.sh
+  register: bootstrap_result
+  timeout: 600
+
+- name: "Afficher le résultat"
+  debug:
+    msg: "{{ bootstrap_result.stdout_lines }}"
+- name: "Activer et démarrer venv-salt-minion"
+  systemd:
+    name: venv-salt-minion
+    state: started
+    enabled: true

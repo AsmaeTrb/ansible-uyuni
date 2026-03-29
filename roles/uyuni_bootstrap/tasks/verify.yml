@@ -1,0 +1,18 @@
+- name: "Activer venv-salt-minion"
+  systemd:
+    name: venv-salt-minion
+    state: started
+    enabled: true
+
+- name: "Attendre 15 secondes que le minion contacte Uyuni"
+  pause:
+    seconds: 15
+
+- name: "Accepter toutes les clés Salt en attente"
+  shell: |
+    mgrctl exec -- salt-key -A -y
+  delegate_to: localhost
+
+- name: "Résultat final"
+  debug:
+    msg: "✅ {{ inventory_hostname }} enregistré avec succès sur Uyuni !"

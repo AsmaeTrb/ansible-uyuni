@@ -1,0 +1,11 @@
+- name: "Phase 1 - Vérifications"
+  import_tasks: preflight.yml
+
+- name: "Phase 2 - Configuration"
+  import_tasks: configure.yml
+
+- name: "Phase 3 - Bootstrap"
+  import_tasks: bootstrap.yml
+
+- name: "Phase 4 - Vérification finale"
+  import_tasks: verify.yml

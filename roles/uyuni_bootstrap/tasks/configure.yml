@@ -1,0 +1,20 @@
+- name: "Ajouter Uyuni dans /etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ uyuni_server }} {{ uyuni_hostname }}"
+    state: present
+
+- name: "Installer chrony (NTP)"
+  package:
+    name: chrony
+    state: present
+
+- name: "Démarrer chrony"
+  systemd:
+    name: chronyd
+    state: started
+    enabled: true
+
+- name: "Synchroniser l'heure immédiatement"
+  command: chronyc makestep
+  changed_when: false

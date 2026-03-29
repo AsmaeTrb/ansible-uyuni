@@ -1,0 +1,12 @@
+---
+- name: "Bootstrap automatique clients Uyuni"
+  hosts: "{{ targets | default('all') }}"
+  become: true
+  gather_facts: true
+
+  vars:
+    uyuni_server: "192.168.78.129"
+    uyuni_hostname: "uyuni.lab.local"
+
+  roles:
+    - uyuni_bootstrap

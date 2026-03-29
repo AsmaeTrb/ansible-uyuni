@@ -1,0 +1,15 @@
+- name: "Vérifier que Uyuni est joignable"
+  wait_for:
+    host: "{{ uyuni_server }}"
+    port: 443
+    timeout: 10
+
+- name: "Vérifier que le script bootstrap est disponible"
+  uri:
+    url: "http://{{ uyuni_server }}/pub/bootstrap/bootstrap.sh"
+    validate_certs: false
+    status_code: 200
+
+- name: "Afficher l'OS détecté"
+  debug:
+    msg: "OS détecté : {{ ansible_distribution }} {{ ansible_distribution_version }}"
