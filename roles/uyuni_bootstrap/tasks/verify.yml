@@ -12,7 +12,7 @@
   shell: |
     mgrctl exec -- salt-key -A -y
   delegate_to: localhost
-
+  become: false
 - name: "Résultat final"
   debug:
     msg: "✅ {{ inventory_hostname }} enregistré avec succès sur Uyuni !"
