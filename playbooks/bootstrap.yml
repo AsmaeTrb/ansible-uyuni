@@ -1,6 +1,5 @@
----
 - name: "Bootstrap automatique clients Uyuni"
-  hosts: "{{ targets | default('all') }}"
+  hosts: rocky_linux:oracle_linux:ubuntu:debian
   become: true
   gather_facts: true
 
