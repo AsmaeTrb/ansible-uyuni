@@ -4,9 +4,11 @@ pipeline {
     stages {
         stage('Bootstrap Uyuni') {
             steps {
-                sh '''
-                ansible-playbook -i /root/ansible-uyuni/inventory.ini /root/ansible-uyuni/playbooks/bootstrap.yml
-                '''
+                ansiblePlaybook(
+                    playbook: '/root/ansible-uyuni/playbooks/bootstrap.yml',
+                    inventory: '/root/ansible-uyuni/inventory.ini',
+                    installation: 'Ansible'
+                )
             }
         }
     }
