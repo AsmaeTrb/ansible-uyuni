@@ -1,19 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        UYUNI_PASSWORD = credentials('uyuni-password')
-    }
-
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Test SSH') {
+            steps {
+                sshagent(credentials: ['ansible-ssh']) {
+                    sh '''
+                        echo "=== Test SSH vers VM2 ==="
+                        ssh -o StrictHostKeyChecking=no root@192.168.100.185 "hostname"
+
+                        echo "=== Test SSH vers Uyuni ==="
+                        ssh -o StrictHostKeyChecking=no root@192.168.78.129 "hostname"
+                    '''
+                }
+            }
+        }
+
         stage('Bootstrap Uyuni') {
             steps {
-                withEnv(["ANSIBLE_EXTRA_VARS=uyuni_password=${UYUNI_PASSWORD}"]) {
+                sshagent(credentials: ['ansible-ssh']) {
                     sh '''
-                    ansible-playbook \
-                        -i /root/ansible-uyuni/inventory.ini \
-                        /root/ansible-uyuni/playbooks/bootstrap.yml \
-                        -e "uyuni_password=${UYUNI_PASSWORD}"
+                        ansible-playbook -i inventory.ini playbooks/bootstrap.yml
                     '''
                 }
             }
