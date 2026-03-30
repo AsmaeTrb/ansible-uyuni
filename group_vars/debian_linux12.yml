@@ -1,0 +1,11 @@
+# Activation key pour Debian12
+activation_key: "1-00268eda2d494d7ea6808056d4ab0161"
+
+# Gestionnaire de paquets
+pkg_manager: apt
+
+# Paquets prérequis
+required_packages:
+  - curl
+  - python3
+  - chrony
