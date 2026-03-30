@@ -1,0 +1,11 @@
+# Activation key pour Debian13
+activation_key: "1-1cfa6eb71e5f437b9e40cff36460a876"
+
+# Gestionnaire de paquets
+pkg_manager: apt
+
+# Paquets prérequis
+required_packages:
+  - curl
+  - python3
+  - chrony
