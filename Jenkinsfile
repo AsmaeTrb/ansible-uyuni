@@ -13,7 +13,7 @@ pipeline {
                 sshagent(credentials: ['ansible-ssh']) {
                     sh '''
                         echo "=== Test SSH vers VM2 ==="
-                        ssh -o StrictHostKeyChecking=no root@192.168.78.136 "hostname"
+                        ssh -o StrictHostKeyChecking=no root@192.168.78.138 "hostname"
                     '''
                 }
             }
