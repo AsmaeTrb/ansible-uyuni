@@ -1,0 +1,11 @@
+# Activation key pour Ubuntu
+activation_key: "fb3e7e9fc84d4fa8a1a6d87738c7fd53"
+
+# Gestionnaire de paquets
+pkg_manager: apt
+
+# Paquets prérequis
+required_packages:
+  - curl
+  - python3
+  - chrony
