@@ -8,17 +8,6 @@ pipeline {
             }
         }
 
-        stage('Test SSH') {
-            steps {
-                sshagent(credentials: ['ansible-ssh']) {
-                    sh '''
-                        echo "=== Test SSH vers VM2 ==="
-                        ssh -o StrictHostKeyChecking=no root@192.168.78.136 "hostname"
-                    '''
-                }
-            }
-        }
-
         stage('Bootstrap Uyuni') {
             steps {
                 sshagent(credentials: ['ansible-ssh']) {
