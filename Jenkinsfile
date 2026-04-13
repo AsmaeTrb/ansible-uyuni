@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['ansible-ssh']) {
                     sh '''
-                        ansible-playbook -i inventory.ini playbooks/assign_groups.yml
+                        ansible-playbook -i inventory.ini playbooks/bootstrap.yml
                     '''
                 }
             }
