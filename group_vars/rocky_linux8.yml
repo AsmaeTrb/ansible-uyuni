@@ -1,0 +1,11 @@
+# Activation key pour Rocky Linux 8
+activation_key: "1-4288b684e33647ffa7baa0982c1f069a"
+
+# Gestionnaire de paquets
+pkg_manager: dnf
+
+# Paquets prérequis
+required_packages:
+  - curl
+  - python3
+  - chrony
