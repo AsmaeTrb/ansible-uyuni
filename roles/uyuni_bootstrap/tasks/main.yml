@@ -1,3 +1,6 @@
+- name: "Phase 0 - Récupération des secrets depuis Vault"
+  import_tasks: vault_secrets.yml
+
 - name: "Phase 1 - Vérifications"
   import_tasks: preflight.yml
 

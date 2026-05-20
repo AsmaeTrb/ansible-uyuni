@@ -1,11 +1,9 @@
-# Activation key pour Ubuntu
-activation_key: "1-c440cd201ce84ce3bbbe4363d0f3ff2a"
-
 # Gestionnaire de paquets
 pkg_manager: apt
-
 # Paquets prérequis
 required_packages:
   - curl
   - python3
   - chrony
+# Nom du champ dans Vault pour cette distribution
+vault_activation_key_field: "ubuntu_activation_key"

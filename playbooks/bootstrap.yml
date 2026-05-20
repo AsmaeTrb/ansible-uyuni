@@ -1,11 +1,8 @@
 - name: "Bootstrap automatique clients Uyuni"
-  hosts: rocky_linux8:rocky_linux9:oracle_linux:ubuntu_linux:debian_linux12:debian_linux13
+  hosts: ubuntu_linux
   become: true
-  gather_facts: true 
-
+  gather_facts: true
   vars:
-    uyuni_server: "192.168.148.142"
-    uyuni_hostname: "uyuni.lab.local"
-
+    vault_env: "dev"
   roles:
     - uyuni_bootstrap
