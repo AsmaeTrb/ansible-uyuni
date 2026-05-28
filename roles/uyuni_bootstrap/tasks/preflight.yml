@@ -6,7 +6,7 @@
 
 - name: "Vérifier que le script bootstrap est disponible"
   uri:
-    url: "http://{{ uyuni_server }}/pub/bootstrap/bootstrap.sh"
+    url: "https://{{ uyuni_server }}/pub/bootstrap/bootstrap.sh"
     validate_certs: false
     status_code: 200
 
