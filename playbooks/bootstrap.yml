@@ -1,5 +1,5 @@
 - name: "Bootstrap automatique clients Uyuni"
-  hosts: ubuntu_linux
+  hosts: rocky_linux8:rocky_linux9:ubuntu_linux:debian_linux12:debian_linux13:oracle_linux
   become: true
   gather_facts: true
   vars:
