@@ -1,5 +1,4 @@
 # Activation key pour Rocky Linux 9
-activation_key: "1-213dd5d660324bb5ac751dd6c7860d94"
 
 # Gestionnaire de paquets
 pkg_manager: dnf
@@ -9,3 +8,4 @@ required_packages:
   - curl
   - python3
   - chrony
+vault_activation_key_field: "activation_key_rocky9"
