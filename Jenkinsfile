@@ -21,6 +21,13 @@ pipeline {
                 }
             }
         }
+        stage('Attente enregistrement Uyuni') {
+            steps {
+                echo "⏳ Attente 60 secondes que Uyuni enregistre les machines..."
+                sleep(60)
+                echo "✅ Attente terminée"
+            }
+        }
         stage('Assign Groups') {
             steps {
                 withCredentials([string(credentialsId: 'vault-token', variable: 'VAULT_TOKEN')]) {
