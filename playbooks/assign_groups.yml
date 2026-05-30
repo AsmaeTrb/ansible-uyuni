@@ -4,12 +4,20 @@
   gather_facts: false
 
   vars:
-    uyuni_host:     "192.168.78.129"
-    uyuni_user:     "admin"
-    uyuni_password: "alinealine"
-    uyuni_url:      "http://{{ uyuni_host }}/rpc/api"
+    vault_env: "dev"
+    vault_activation_key_field: "activation_key_rocky9"  # valeur par défaut ignorée
 
   tasks:
+
+    # ═══════════════════════════
+    # 0. VAULT — récupérer les secrets
+    # ═══════════════════════════
+    - name: "VAULT | Récupération des secrets"
+      include_tasks: ../roles/uyuni_bootstrap/tasks/vault_secrets.yml
+
+    - name: "VAULT | Construire l'URL Uyuni"
+      set_fact:
+        uyuni_url: "https://{{ uyuni_server }}/rpc/api"
 
     # ═══════════════════════════
     # 1. LOGIN
@@ -20,6 +28,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -31,12 +40,14 @@
           </methodCall>
         return_content: true
       register: login_response
+      no_log: true
 
     - name: Extraire le token
       set_fact:
         session: "{{ login_response.content
-          | regex_search('<string>(.*?)</string>', '\\1')
+          | regex_search('<value><string>([^<]+)</string></value>', '\\1')
           | first }}"
+      no_log: true
 
     # ═══════════════════════════
     # 2. ROCKY LINUX (8 + 9)
@@ -47,6 +58,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -65,6 +77,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -90,6 +103,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -118,6 +132,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -136,6 +151,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -161,6 +177,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -189,6 +206,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -212,6 +230,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -240,6 +259,7 @@
         method: POST
         headers:
           Content-Type: "text/xml"
+        validate_certs: false
         body: |
           <?xml version="1.0"?>
           <methodCall>
@@ -249,6 +269,7 @@
             </params>
           </methodCall>
         return_content: true
+      no_log: true
 
     - name: Terminé
       debug:
